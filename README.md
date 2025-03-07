@@ -66,4 +66,6 @@ How to use the table features
 Images:
 ![image](https://github.com/user-attachments/assets/fee97cde-722b-4c2a-9322-f53b5bf5ccfb)
 ![image](https://github.com/user-attachments/assets/59115feb-995f-40eb-ae66-14407950a5d1)
+![image](https://github.com/user-attachments/assets/99c2b5c8-1594-4ecc-bf99-b67d18b80fa3)
+![image](https://github.com/user-attachments/assets/b0b1bed1-c39e-4bc8-ba99-8fba956ab2fd)
 
