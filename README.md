@@ -62,3 +62,8 @@ How to use the table features
    - Select how many items to show per page (10, 20, or 50)
    - Changes will reset current filters and sorting
    - Table will return to first page
+  
+Images:
+![image](https://github.com/user-attachments/assets/fee97cde-722b-4c2a-9322-f53b5bf5ccfb)
+![image](https://github.com/user-attachments/assets/59115feb-995f-40eb-ae66-14407950a5d1)
+
