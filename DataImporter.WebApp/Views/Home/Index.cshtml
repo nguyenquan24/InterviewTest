@@ -1,0 +1,141 @@
+﻿@{
+    ViewData["Title"] = "Market Data Dashboard";
+
+    decimal minPrice = 0;
+    decimal maxPrice = 0;
+    decimal averagePrice = 0;
+    decimal mostExpensiveHourPrice = 0;
+    DateTime mostExpensiveHourStart = new DateTime();
+    List<DataImporter.Models.MarketData> marketDataList = new List<DataImporter.Models.MarketData>();
+
+    var errorMessage = ViewBag.ErrorMessage;
+    if (string.IsNullOrWhiteSpace(errorMessage))
+    {
+        marketDataList = ViewBag.MarketData;
+        minPrice = ViewBag.MinPrice;
+        maxPrice = ViewBag.MaxPrice;
+        averagePrice = ViewBag.AveragePrice;
+        mostExpensiveHourPrice = ViewBag.MostExpensiveHourPrice;
+        mostExpensiveHourStart = ViewBag.MostExpensiveHourStart;
+    }
+}
+
+<div class="dashboard-container">
+    @if (!string.IsNullOrWhiteSpace(errorMessage))
+    {
+        <div class="alert alert-danger">@errorMessage</div>
+    }
+    else if (marketDataList != null && marketDataList.Any())
+    {
+        <div class="statistics-grid">
+            <div class="stat-card">
+                <h3>Minimum Price</h3>
+                <div class="value">@minPrice.ToString("C2")</div>
+            </div>
+            <div class="stat-card">
+                <h3>Maximum Price</h3>
+                <div class="value">@maxPrice.ToString("C2")</div>
+            </div>
+            <div class="stat-card">
+                <h3>Average Price</h3>
+                <div class="value">@averagePrice.ToString("C2")</div>
+            </div>
+            <div class="stat-card">
+                <h3>Most Expensive Hour</h3>
+                <div class="value">@mostExpensiveHourPrice.ToString("C2")</div>
+                <small>@mostExpensiveHourStart.ToString("HH:mm") - @mostExpensiveHourStart.AddHours(1).ToString("HH:mm")</small>
+            </div>
+        </div>
+        <div class="chart-container">
+            <h2>Market Price Chart</h2>
+            <canvas id="marketChart"></canvas>
+        </div>
+
+        <h2>Market Data</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered" id="marketDataTable">
+                <thead>
+                <tr class="header-row">
+                    <th onclick="sortTable(0)">
+                        <div class="header-content">
+                            Date
+                            <i class="fas fa-sort"></i>
+                        </div>
+                    </th>
+                    <th onclick="sortTable(1)">
+                        <div class="header-content">
+                            Market Price
+                            <i class="fas fa-sort"></i>
+                        </div>
+                    </th>
+                </tr>
+                <tr class="filter-row">
+                    <th>
+                        <div class="filter-container">
+                            <div class="date-range-filter">
+                                <input type="datetime-local" class="filter-input" id="startDateFilter" placeholder="From date...">
+                                <span class="date-separator">-</span>
+                                <input type="datetime-local" class="filter-input" id="endDateFilter" placeholder="To date...">
+                            </div>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="filter-container">
+                            <input type="number" class="filter-input" id="priceFilter" placeholder="Filter price..." step="0.01" min="0">
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var data in marketDataList)
+                {
+                    <tr>
+                        <td>@data.Date</td>
+                        <td>@data.MarketPrice</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p>No data available.</p>
+    }
+
+    <div class="table-footer">
+        <div class="table-footer-left">
+            <div id="pagination" class="pagination-container">
+            </div>
+            <div class="goto-page-container">
+                <label for="pageNumberInput">Go to page:</label>
+                <input type="number" id="pageNumberInput" min="1" value="1" class="page-number-input">
+                <button id="goToPageButton" class="goto-button">Go</button>
+                <button id="clearFiltersButton" class="goto-button">Clear filters</button>
+            </div>
+        </div>
+        <div class="table-footer-right">
+            <div class="items-per-page">
+                <label for="itemsPerPageSelect">Items per page:</label>
+                <select id="itemsPerPageSelect" class="items-per-page-select">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/chart.js"></script>
+    <script src="~/js/chart-adapter.js"></script>
+    <script src="~/js/chart-zoom.js"></script>
+    <script src="~/js/marketData.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const marketData = @Html.Raw(Json.Serialize(marketDataList));
+            initializeMarketData(marketData);
+        });
+    </script>
+}

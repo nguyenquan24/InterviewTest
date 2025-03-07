@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\Projects\MarketData\SetaInterview\Release</_PublishTargetUrl>
+    <History>True|2025-03-06T14:44:03.5907109Z||;False|2025-03-06T21:43:25.5438129+07:00||;False|2025-03-06T21:42:52.9461288+07:00||;True|2025-03-06T21:13:28.5147900+07:00||;True|2025-03-06T21:05:38.1035556+07:00||;True|2025-03-06T20:51:48.2166678+07:00||;True|2025-03-06T20:24:23.7892371+07:00||;True|2025-03-06T20:22:48.1204044+07:00||;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+</Project>
